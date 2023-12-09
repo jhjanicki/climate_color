@@ -5,6 +5,7 @@ let yourDeathYear;
 let yourAge;
 let yourData;
 let yourBirthYearTemp;
+let yourDeathYearTemp;
 let selecterPersonBirthYear;
 let selecterPersonDeathYear;
 let selectedPersonData;
@@ -21,7 +22,7 @@ $("#bithyearInput").on("input", function() {
     yourDeathYear = yourBirthYear + 99;
     yourData = data.filter(d => d.Year >= yourBirthYear && d.Year <= yourDeathYear)
     updateIcon("#you", yourAge)
-    yourBirthYearTemp = data.filter(d => d.Year == yourBirthYear)[0].historical
+    yourBirthYearTemp = data.filter(d => d.Year == yourBirthYear)[0].historical.toFixed(2)
     $("#birthYearContainer").css("background", tempColorScale(yourBirthYearTemp))
     $("#birthYearContainer").css("border", "0px")
 });
@@ -38,11 +39,22 @@ $(".celebrityWrapper").on("click", function() {
 $(".scenario").on("click", function() {
     currentScenario = $(this).attr("id")
     $("#scenarioSelected").html(currentScenario)
+    yourDeathYearTemp = data.filter(d => d.Year == yourDeathYear)[0][currentScenario].toFixed(2)
 })
 
 $("#start").on("click", function() {
     if (yourBirthYear && selecterPersonBirthYear && currentScenario) {
         svg.style("display", "block")
+        svg2.style("display", "block")
+        $("#conclusion").css("display", "block")
+        if(yourDeathYearTemp ===(-1.00)){
+            yourDeathYearTemp = "unsure (data not available after 2100)"
+        }
+        $("#tempLow").html(yourBirthYearTemp)
+        $("#tempHigh").html(yourDeathYearTemp)
+        $("#yearLow").html(yourBirthYear)
+        $("#yearHigh").html(yourDeathYear)
+        $("#ssp").html(currentScenario)
         updateRects();
         startTimeline();
     } else {
@@ -94,7 +106,7 @@ const svg = d3
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .attr("transform", "translate(0," + margin.top + ")")
-    .style("display", "none");
+    .style("display","none")
 
 const bg = svg.append("g").attr("id", "background1").attr("transform", `translate(0,${margin.top})`);
 const bg2 = svg.append("g").attr("id", "background2").attr("transform", `translate(${width/2},${margin.top})`);
@@ -190,6 +202,42 @@ svg.append("text")
     .style("font-weight", 300);
 
 
+//SVG2 set up, for your climate color at the end
+
+const height2 = 500;
+const margin2 = {
+    top: 50,
+    bottom:30
+}
+const svg2 = d3
+    .select("#chart2")
+    .append("svg")
+    .attr("id", "svg2")
+    .attr("width", width)
+    .attr("height", height2 + margin2.top+margin2.bottom)
+    .style("display","none")
+
+const bg3 = svg2.append("g").attr("transform", "translate(0," + margin2.top + ")")
+
+const xScale = d3
+    .scaleLinear()
+    .domain([1, 100])
+    .range([0, width]);
+
+
+bg3.selectAll("bgRect3")
+    .data(dummyData)
+    .join("rect")
+    .attr("class", "bgRect3")
+    .attr("id", (d, i) => `bgRect3_${i+1}`)
+    .attr("width", xScale(2)-xScale(1)+0.3)
+    .attr("height", height2)
+    .attr("x", d=>xScale(d.Year - 1988))
+    .attr("y", 0)
+
+ bg3.append("text").attr("id","yourBirthYear").attr("x",10).attr("y",-10).attr("fill","black").text(1988)
+bg3.append("text").attr("id","yourDeathYear").attr("x",width-40).attr("y",-10).attr("fill","black").text(2087)
+
 const texture = textures.circles()
     .size(20)
     .radius(1)
@@ -240,6 +288,27 @@ function updateRects() {
     d3.select(".temperature1").data(yourData).text(d => d[currentScenario].toFixed(2) === "-1.00" ? "No data" : `${d[currentScenario].toFixed(2)>0?"+":""}${d[currentScenario].toFixed(2)}°C`)
     d3.select(".temperature2").data(selectedPersonData).text(d =>d[currentScenario].toFixed(2) === "-1.00" ? "No data" : `${d[currentScenario].toFixed(2)>0?"+":""}${d[currentScenario].toFixed(2)}°C`)
 
+
+    d3.selectAll(".bgRect3")
+        .data(yourData)
+        .attr("fill", d => {
+            if (d.historic === "no") {
+                let rectTexture = textures.circles()
+                    .size(20)
+                    .radius(1)
+                    .fill("black")
+                    .background(tempColorScale(d[currentScenario]));
+                svg.call(rectTexture);
+                return rectTexture.url()
+            } else if (d.historic === "NA") {
+                return texture.url()
+            } else {
+                return tempColorScale(d[currentScenario])
+            }
+        })
+
+        d3.select("#yourBirthYear").text(yourBirthYear)
+        d3.select("#yourDeathYear").text(yourDeathYear)
 }
 
 let age = 0;

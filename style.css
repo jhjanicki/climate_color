@@ -55,7 +55,7 @@ p {
     margin-top: 30px;
 }
 
-.intro {
+.textBlock{
     max-width: 650px;
     margin: auto;
     padding: 40px 20px;
@@ -215,24 +215,23 @@ p {
 
 .scenario:nth-child(5) {
     background-color: #67000d;
+    color: white;
 }
 
 #start {
     margin: 20px auto;
 }
 
-#chartWrapper {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    top: 0
-}
-
-#chartWrapper #chart {
+#chart, #chart2 {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     position: relative;
+}
+
+
+#conclusion{
+    display: none;
 }
 
 .button {
