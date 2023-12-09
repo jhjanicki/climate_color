@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Climate change scenarios</title>
+	<!-- Google fonts -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap"
+		rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href="./style.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<div id="selectionWrapper">
+		<div class="header">
+			<div class="headerText">
+				<h1>What is your Climate Color?</h1>
+				<h3>Zoom in and compare your climate stripe from cradle to grave tk subhed that tells you what we are
+					doing
+					here</h3>
+				<p>By Julia Janicki, Daisy Chung & Jacki Whisenant </p>
+			</div>
+		</div>
+		<div class="intro">
+			<p> Each of the colored stripes represent the annual temperature change relative to pre-industrial levels,
+				meaning the long-term average of 1850-1900. Up until 2023 (in 2023 up to October only) we are seeing
+				historical temperatures, while after 2023 the colors show projected temperatures based on the five
+				Shared Socioeconomic Pathways (SSPs). </p>
+			<img src="./img/stripe.svg" />
+		</div>
+
+		<div class="container">
+			<div class='row text-center'>
+				<div class="col-md-3" id="birthYearSelection">
+					<p class="instruction"><span class="number">1</span> Select your birth year</p>
+					<div id="birthYearContainer">
+						<div id="imgContainer">
+							<img id="you" class="icon" src="./img/baby.png" />
+						</div>
+						<div>
+							<input type="range" id="bithyearInput" name="bithyearInput" step="1" min="1923" max="2023">
+						</div>
+						<p id="birthYearText">Your birth year:<span id="birthyear"></span></p>
+						<p id="birthYearInstruction">Color of tiles represent the temperature anomaly of your birth
+							year. Age ranging from 1923 to 2023.</p>
+					</div>
+				</div>
+
+				<div class="col-md-9" id="celebritySelection">
+					<p class="instruction"><span class="number">2</span> Select a one of the following characters</p>
+					<div id="celebrityContainer">
+						<div class="celebrityWrapper">
+							<img class="icon" src="./img/sanders.png" />
+							<p class="personYear">1926</p>
+							<p class="person">David Attenborough</p>
+						</div>
+						<div class="celebrityWrapper">
+							<img class="icon" src="./img/sanders.png" />
+							<p class="personYear">1941</p>
+							<p class="person">Bernie Sanders</p>
+						</div>
+						<div class="celebrityWrapper">
+							<img class="icon" src="./img/federer.png" />
+							<p class="personYear">1963</p>
+							<p class="person">Michael Jordan</p>
+						</div>
+						<div class="celebrityWrapper">
+							<img class="icon" src="./img/federer.png" />
+							<p class="personYear">1981</p>
+							<p class="person">Roger Federer</p>
+						</div>
+						<div class="celebrityWrapper">
+							<img class="icon" src="./img/watson.png" />
+							<p class="personYear">1990</p>
+							<p class="person">Emma Watson</p>
+						</div>
+						<div class="celebrityWrapper">
+							<img class="icon" src="./img/thunberg.png" />
+							<p class="personYear">2003</p>
+							<p class="person">Greta Thunberg</p>
+						</div>
+						<div class="celebrityWrapper">
+							<img class="icon" src="./img/8thbillion.png" />
+							<p class="personYear">2022</p>
+							<p class="person">8 billionth baby</p>
+						</div>
+						<div class="celebrityWrapper">
+							<img class="icon" src="./img/8thbillion.png" />
+							<p class="personYear">2040</p>
+							<p class="person">Future baby</p>
+						</div>
+					</div>
+					<p id="celebrityBirthYear"></p>
+				</div>
+			</div>
+			<div class='row text-center'>
+				<div class="col-md-12">
+					<div id="sspText">
+						<p class="instruction"><span class="number">3</span> Select projected climate scenario</p>
+
+						<p>Shared Socioeconomic Pathways (SSPs) are climate change scenarios projecting societal,
+							demographic and economic changes up to 2100. In the SSP labels,
+							the first number refers to the assumed shared socio-economic pathway (1: Sustainability, 2:
+							Middle of the Road, 3: Regional Rivalry, 4: Inequality, 5: Fossil-fueled Development), and
+							the second refers to the approximate global effective radiative forcing (ERF) in 2100. Pick
+							one of these scenarios to see the proejcted annual temperature after 2023,
+							up until 2100, depending on the socioeconomic
+							global changes. </p>
+					</div>
+					<div id="scenariosContainer">
+						<div class="scenario" id="ssp119">
+							<p>ssp1-1.9</p>
+							<img class="icon" src="./img/baby.png" />
+							<p>1.5°C objective </p>
+						</div>
+						<div class="scenario" id="ssp126">
+							<p>ssp1-2.6</p>
+							<img class="icon" src="./img/baby.png" />
+							<p>Sustainability</p>
+						</div>
+						<div class="scenario" id="ssp245">
+							<p>ssp2-4.5</p>
+							<img class="icon" src="./img/baby.png" />
+							<p>Middle of the road</p>
+						</div>
+						<div class="scenario" id="ssp370">
+							<p>ssp3-7.0</p>
+							<img class="icon" src="./img/baby.png" />
+							<p>Regional rivalry</p>
+						</div>
+						<div class="scenario" id="ssp585">
+							<p>ssp5-8.5</p>
+							<img class="icon" src="./img/baby.png" />
+							<p>Fossil fuel-driven </p>
+						</div>
+					</div>
+					<p>Scenario selected:<span id="scenarioSelected"></span></p>
+				</div>
+			</div>
+		</div>
+		<p id="start" class="button">start</p>
+	</div>
+
+	<div id="chartWrapper">
+		<div id="chart"></div>
+	</div>
+
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span id="closeModal">&times;</span>
+			<p id="modalText">Select the three options</p>
+		</div>
+	</div>
+
+
+
+	<!-- JavaScript plugin files -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/textures@1.2.0/dist/textures.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+	<script src="./data/scenariosData.js"></script>
+	<script src="./main.js"></script>
+</body>
+
+</html>

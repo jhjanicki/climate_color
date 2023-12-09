@@ -1,0 +1,315 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    -webkit-transition: transform 1s ease-in-out;
+    transition: transform 1s ease-in-out;
+    overflow-x: hidden;
+}
+
+p {
+    margin: 0px;
+}
+
+.header {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("./img/bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.headerText {
+    text-align: center;
+    color: white;
+    padding: 100px;
+    background-color: rgba(0, 0, 0, 0.25);
+    width: 100%;
+}
+
+.headerText h1 {
+    font-size: 80px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.headerText h3 {
+    font-size: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.headerText p {
+    margin-top: 30px;
+}
+
+.intro {
+    max-width: 650px;
+    margin: auto;
+    padding: 40px 20px;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: justify;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.instruction {
+    font-weight: 700;
+    color: #67000D;
+    text-align: left;
+    margin: 20px 0px;
+}
+
+.number {
+    display: inline-block;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    background-color: #67000D;
+    color: white;
+    margin-right: 10px;
+    padding-top: 1px;
+    font-weight: 400;
+}
+
+#birthYearContainer {
+    border-radius: 10px;
+    height: 365px;
+    border: 0.5px solid black;
+}
+
+#birthYearContainer input,
+#birthYearContainer img {
+    margin: 10px 0px;
+}
+
+#birthYearContainer #imgContainer {
+    height: 180px;
+}
+
+#birthYearInstruction {
+    text-align: left;
+    margin: auto 20px;
+}
+
+#birthYearText {
+    text-align: center;
+    margin: 10px;
+}
+
+#celebrityContainer {
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.celebrityWrapper {
+    text-align: center;
+    display: inline-block;
+    height: 180px;
+    width: 180px;
+    border-radius: 10px;
+}
+
+.celebrityWrapper:hover {
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.celebrityWrapper:nth-child(1) {
+    background-color: #2171B5;
+}
+
+.celebrityWrapper:nth-child(2) {
+    background-color: #2171b5;
+}
+
+.celebrityWrapper:nth-child(3) {
+    background-color: #2171b5;
+}
+
+.celebrityWrapper:nth-child(4) {
+    background-color: #6baed6;
+}
+
+.celebrityWrapper:nth-child(5) {
+    background-color: #deebf7;
+}
+
+.celebrityWrapper:nth-child(6) {
+    background-color: #deebf7;
+}
+
+.celebrityWrapper:nth-child(7) {
+    background-color: #deebf7;
+}
+
+.celebrityWrapper:nth-child(8) {
+    background-color: #fff5f0;
+}
+
+.icon {
+    width: auto;
+    height: auto;
+    display: inline-block;
+}
+
+#sspText {
+    max-width: 900px;
+    text-align: justify;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#scenariosContainer {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.scenario {
+    text-align: center;
+    display: inline-block;
+    height: 180px;
+    width: 180px;
+    border-radius: 10px;
+}
+
+.scenario:hover {
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.scenario:nth-child(1) {
+    background-color: #fff5f0;
+}
+
+.scenario:nth-child(2) {
+    background-color: #fee0d2;
+}
+
+.scenario:nth-child(3) {
+    background-color: #fc9272;
+}
+
+.scenario:nth-child(4) {
+    background-color: #cb181d;
+}
+
+.scenario:nth-child(5) {
+    background-color: #67000d;
+}
+
+#start {
+    margin: 20px auto;
+}
+
+#chartWrapper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0
+}
+
+#chartWrapper #chart {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.button {
+    margin-left: auto;
+    margin-right: auto;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    width: 100px;
+    text-align: center;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.button:hover {
+    transition: all 0.5s ease;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding: 20px;
+    box-shadow: 1px 1px 5px -1px rgba(0, 0, 0, 0.5);
+    width: 500px;
+    border: none;
+    border-radius: 20px;
+}
+
+.modal-content p {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* The Close Button */
+#closeModal {
+    font-size: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    background-color: #67000D;
+    color: white;
+    margin-right: 10px;
+    transition: all 0.5s ease;
+    transform: rotate(90deg);
+    position: absolute;
+    right: 0px;
+    top: 10px;
+}
+
+#closeModal:hover,
+#closeModal:focus {
+    background-color: #ae9184;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
