@@ -100,7 +100,7 @@ p {
 }
 
 #birthYearContainer #imgContainer {
-    height: 180px;
+    margin: 20px auto;
 }
 
 #birthYearInstruction {

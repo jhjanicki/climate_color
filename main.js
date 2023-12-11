@@ -47,7 +47,7 @@ $("#start").on("click", function() {
         svg.style("display", "block")
         svg2.style("display", "block")
         $("#conclusion").css("display", "block")
-        if(yourDeathYearTemp ===(-1.00)){
+        if (yourDeathYearTemp === (-1.00)) {
             yourDeathYearTemp = "unsure (data not available after 2100)"
         }
         $("#tempLow").html(yourBirthYearTemp)
@@ -57,6 +57,8 @@ $("#start").on("click", function() {
         $("#ssp").html(currentScenario)
         updateRects();
         startTimeline();
+
+
     } else {
         $(".modal").css("display", "block")
     }
@@ -64,6 +66,10 @@ $("#start").on("click", function() {
 
 $("#closeModal").on("click", function() {
     $(".modal").css("display", "none")
+})
+
+$("#download").on('click', function() {
+    captureScreenshot();
 })
 
 
@@ -90,7 +96,9 @@ const yScale = d3
     .domain([1, 100])
     .range([margin.top, height - margin.bottom]);
 
-const numbers = Array.from({length: 100}, (_, index) => index + 1);
+const numbers = Array.from({
+    length: 100
+}, (_, index) => index + 1);
 const center = (width + margin.left + margin.right) / 2;
 const imgDimension = 40;
 const ageRectWidth = 80;
@@ -106,7 +114,7 @@ const svg = d3
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .attr("transform", "translate(0," + margin.top + ")")
-    .style("display","none")
+    .style("display", "none")
 
 const bg = svg.append("g").attr("id", "background1").attr("transform", `translate(0,${margin.top})`);
 const bg2 = svg.append("g").attr("id", "background2").attr("transform", `translate(${width/2},${margin.top})`);
@@ -149,7 +157,7 @@ svg.selectAll("text.year2")
     .data(numbers)
     .join("text")
     .attr("class", "year2")
-    .attr("x", width-yearTextOffsetX)
+    .attr("x", width - yearTextOffsetX)
     .attr("y", (d, i) => margin.top + i * (yScale(1) - yScale(0)) - yearTextOffsetY)
     .attr("fill", "black")
     .attr("text-anchor", "end")
@@ -187,7 +195,7 @@ svg.append("text")
 
 svg.append("rect")
     .attr("class", "ageRect")
-    .attr("x", center - ageRectWidth/2)
+    .attr("x", center - ageRectWidth / 2)
     .attr("rx", 5)
     .attr("ry", 5)
     .attr("width", ageRectWidth)
@@ -207,15 +215,15 @@ svg.append("text")
 const height2 = 500;
 const margin2 = {
     top: 50,
-    bottom:30
+    bottom: 30
 }
 const svg2 = d3
     .select("#chart2")
     .append("svg")
     .attr("id", "svg2")
     .attr("width", width)
-    .attr("height", height2 + margin2.top+margin2.bottom)
-    .style("display","none")
+    .attr("height", height2 + margin2.top + margin2.bottom)
+    .style("display", "none")
 
 const bg3 = svg2.append("g").attr("transform", "translate(0," + margin2.top + ")")
 
@@ -230,13 +238,13 @@ bg3.selectAll("bgRect3")
     .join("rect")
     .attr("class", "bgRect3")
     .attr("id", (d, i) => `bgRect3_${i+1}`)
-    .attr("width", xScale(2)-xScale(1)+0.3)
+    .attr("width", xScale(2) - xScale(1) + 0.3)
     .attr("height", height2)
-    .attr("x", d=>xScale(d.Year - 1988))
+    .attr("x", d => xScale(d.Year - 1988))
     .attr("y", 0)
 
- bg3.append("text").attr("id","yourBirthYear").attr("x",10).attr("y",-10).attr("fill","black").text(1988)
-bg3.append("text").attr("id","yourDeathYear").attr("x",width-40).attr("y",-10).attr("fill","black").text(2087)
+bg3.append("text").attr("id", "yourBirthYear").attr("x", 10).attr("y", -10).attr("fill", "black").text(1988)
+bg3.append("text").attr("id", "yourDeathYear").attr("x", width - 40).attr("y", -10).attr("fill", "black").text(2087)
 
 const texture = textures.circles()
     .size(20)
@@ -286,95 +294,96 @@ function updateRects() {
 
     //just to update the temp texts of the first rect when user clicks start, may not be necessary
     d3.select(".temperature1").data(yourData).text(d => d[currentScenario].toFixed(2) === "-1.00" ? "No data" : `${d[currentScenario].toFixed(2)>0?"+":""}${d[currentScenario].toFixed(2)}°C`)
-    d3.select(".temperature2").data(selectedPersonData).text(d =>d[currentScenario].toFixed(2) === "-1.00" ? "No data" : `${d[currentScenario].toFixed(2)>0?"+":""}${d[currentScenario].toFixed(2)}°C`)
+    d3.select(".temperature2").data(selectedPersonData).text(d => d[currentScenario].toFixed(2) === "-1.00" ? "No data" : `${d[currentScenario].toFixed(2)>0?"+":""}${d[currentScenario].toFixed(2)}°C`)
 
 
     d3.selectAll(".bgRect3")
         .data(yourData)
-        .attr("fill", d => {
-            if (d.historic === "no") {
-                let rectTexture = textures.circles()
-                    .size(20)
-                    .radius(1)
-                    .fill("black")
-                    .background(tempColorScale(d[currentScenario]));
-                svg.call(rectTexture);
-                return rectTexture.url()
-            } else if (d.historic === "NA") {
-                return texture.url()
-            } else {
-                return tempColorScale(d[currentScenario])
-            }
-        })
+        .attr("fill", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]))
 
-        d3.select("#yourBirthYear").text(yourBirthYear)
-        d3.select("#yourDeathYear").text(yourDeathYear)
+    d3.select("#yourBirthYear").text(yourBirthYear)
+    d3.select("#yourDeathYear").text(yourDeathYear)
 }
 
 let age = 0;
 
 function startTimeline() {
-        gsap.timeline({
-            scrollTrigger: {
-                trigger: "#svg",
-                scrub: true,
-                markers: false,
-                start: "top top", //first trigger, second scroller
-                end: "100% bottom",
-                onUpdate({
-                    progress,
-                }) {
-                    age = Math.round((progress * 100))
-                    updateIcon(".you", age) //update 'you' icon based on age
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: "#svg",
+            scrub: true,
+            markers: false,
+            start: "top top", //first trigger, second scroller
+            end: "100% bottom",
+            onUpdate({
+                progress,
+            }) {
+                age = Math.round((progress * 100))
+                updateIcon(".you", age) //update 'you' icon based on age
 
-                    if (age < 100) {
-                        let temp1 = (yourData[age][currentScenario]).toFixed(2);
-                        let temp2 = (selectedPersonData[age][currentScenario]).toFixed(2);
+                if (age < 100) {
+                    let temp1 = (yourData[age][currentScenario]).toFixed(2);
+                    let temp2 = (selectedPersonData[age][currentScenario]).toFixed(2);
 
-                        //update y poositions of icons and text
-                        d3.select(".you").attr("y", yScale(Math.round(progress * 100)))
-                        d3.select(".celebrity").attr("y", yScale(Math.round(progress * 100)))
-                        d3.select(".ageRect").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)))
-                        d3.select(".ageText").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)) + 20).text(`Age ${+age+1}`)
+                    //update y poositions of icons and text
+                    d3.select(".you").attr("y", yScale(Math.round(progress * 100)))
+                    d3.select(".celebrity").attr("y", yScale(Math.round(progress * 100)))
+                    d3.select(".ageRect").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)))
+                    d3.select(".ageText").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)) + 20).text(`Age ${+age+1}`)
 
-                        //highlight current rects and unhighlight the rest
-                        d3.selectAll(".bgRect1").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
-                        d3.select(`#bgRect1_${age+1}`).attr("stroke", "#000").attr("stroke-width", "2px");
+                    //highlight current rects and unhighlight the rest
+                    d3.selectAll(".bgRect1").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
+                    d3.select(`#bgRect1_${age+1}`).attr("stroke", "#000").attr("stroke-width", "2px");
 
-                        d3.selectAll(".bgRect2").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
-                        d3.select(`#bgRect2_${age+1}`).attr("stroke", "#000").attr("stroke-width", "2px");
+                    d3.selectAll(".bgRect2").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
+                    d3.select(`#bgRect2_${age+1}`).attr("stroke", "#000").attr("stroke-width", "2px");
 
-                        d3.select(".temperature1").attr("y", yScale(Math.round(progress * 100)) + 46).text(temp1 === "-1.00" ? "No data" : `${temp1>0?"+":""}${temp1}°C`).attr("x", temp1 == "-1.00" ? (center - 150) : (center - 140)) //I used -1 to indicate no data
-                        d3.select(".temperature2").attr("y", yScale(Math.round(progress * 100)) + 46).text(temp2 === "-1.00" ? "No data" : `${temp2>0?"+":""}${temp2}°C`)
-                    }
+                    d3.select(".temperature1").attr("y", yScale(Math.round(progress * 100)) + 46).text(temp1 === "-1.00" ? "No data" : `${temp1>0?"+":""}${temp1}°C`).attr("x", temp1 == "-1.00" ? (center - 150) : (center - 140)) //I used -1 to indicate no data
+                    d3.select(".temperature2").attr("y", yScale(Math.round(progress * 100)) + 46).text(temp2 === "-1.00" ? "No data" : `${temp2>0?"+":""}${temp2}°C`)
                 }
             }
-        })
-
+        }
+    })
 }
+
+
+
+  function captureScreenshot() {
+    const divToCapture = document.getElementById('chart2');
+
+    html2canvas(divToCapture).then(function (canvas) {
+      const dataURL = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = 'screenshot.png';
+      link.click();
+    });
+
+  }
+
 
 //Functions to update icons...
 
 // icons are temporary so conoditions will change
 function updateCelebrityIcon() {
     if (selectedPerson === "Bernie Sanders" || selectedPerson === "David Attenborough") {
-        d3.select(".celebrity").attr("xlink:href", "../img/sanders.png")
+        d3.select(".celebrity").attr("xlink:href", "./img/sanders.png")
     }
 
     if (selectedPerson === "Michael Jordan" || selectedPerson === "Rodger Federer") {
-        d3.select(".celebrity").attr("xlink:href", "../img/federer.png")
+        d3.select(".celebrity").attr("xlink:href", "./img/federer.png")
     }
 
     if (selectedPerson === "Emma Watson") {
-        d3.select(".celebrity").attr("xlink:href", "../img/watson.png")
+        d3.select(".celebrity").attr("xlink:href", "./img/watson.png")
     }
 
     if (selectedPerson === "Greta Thunberg") {
-        d3.select(".celebrity").attr("xlink:href", "../img/thunberg.png")
+        d3.select(".celebrity").attr("xlink:href", "./img/thunberg.png")
     }
 
     if (selectedPerson === "8 billionth baby" || selectedPerson === "Future baby") {
-        d3.select(".celebrity").attr("xlink:href", "../img/8thbillion.png")
+        d3.select(".celebrity").attr("xlink:href", "./img/8thbillion.png")
     }
 }
 
@@ -382,25 +391,25 @@ function updateCelebrityIcon() {
 function updateIcon(classOrID, age) {
 
     if (age >= 0 && age < 4) {
-        d3.select(classOrID).attr("xlink:href", "../img/baby.png")
-        $(classOrID).attr("src", "../img/baby.png");
+        d3.select(classOrID).attr("xlink:href", "./img/baby.png")
+        $(classOrID).attr("src", "./img/baby.png");
     }
     if (age >= 4 && age < 11) {
-        d3.select(classOrID).attr("xlink:href", "../img/kid.png")
-        $(classOrID).attr("src", "../img/kid.png");
+        d3.select(classOrID).attr("xlink:href", "./img/kid.png")
+        $(classOrID).attr("src", "./img/kid.png");
     }
     if (age >= 11 && age < 20) {
-        d3.select(classOrID).attr("xlink:href", "../img/teen.png")
-        $(classOrID).attr("src", "../img/teen.png");
+        d3.select(classOrID).attr("xlink:href", "./img/teen.png")
+        $(classOrID).attr("src", "./img/teen.png");
     }
     if (age >= 20 && age < 60) {
-        d3.select(classOrID).attr("xlink:href", "../img/adult.png")
-        $(classOrID).attr("src", "../img/adult.png");
+        d3.select(classOrID).attr("xlink:href", "./img/adult.png")
+        $(classOrID).attr("src", "./img/adult.png");
     }
 
     if (age >= 60 && age <= 100) {
-        d3.select(classOrID).attr("xlink:href", "../img/old.png")
-        $(classOrID).attr("src", "../img/old.png");
+        d3.select(classOrID).attr("xlink:href", "./img/old.png")
+        $(classOrID).attr("src", "./img/old.png");
     }
 
 }
