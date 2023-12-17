@@ -9,34 +9,66 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap"
 		rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
 	<link href="./style.css" rel="stylesheet">
 </head>
 
 <body>
 
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span id="closeModal">&times;</span>
+			<p id="modalText">Select the three options</p>
+		</div>
+	</div>
+
+	<div id="menu">
+		<div id="menuTitleWrapper">
+			<p id="menuTitle" class="menuTitleItem">Selection summary</p>
+			<img id="menuCaret" class="menuTitleItem" src="img/caret.png" />
+		</div>
+		<div id="menuInner">
+			<p><span class="numberSmall">1</span><b>Your birth year:</b> <span id="birthyearMenu"></span></p>
+			<hr>
+			<p><span class="numberSmall">2</span><b>Famous person:</b><br> <span id="celebrityMenu"></span></p>
+			<hr>
+			<p><span class="numberSmall">3</span><b>Scenario:</b> <span id="scenarioMenu"></span></p>
+		</div>
+	</div>
+
+
 	<div id="selectionWrapper">
 		<div class="header">
 			<div class="headerText">
-				<h1>What is your Climate Color?</h1>
-				<h3>Zoom in and compare your climate stripe from cradle to grave tk subhed that tells you what we are
-					doing
-					here</h3>
-				<p>By Julia Janicki, Daisy Chung & Jacki Whisenant </p>
+				<h1>A lifetime of change</h1>
+				<h3>Leaving the future generation hope for a better planet</h3>
+				<p>By Julia Janicki, Daisy Chung. Additional work by Jacki Whisenant </p>
 			</div>
 		</div>
 		<div class="textBlock">
-			<p> Each of the colored stripes represent the annual temperature change relative to pre-industrial levels,
+			<p> Globally, wildfires, heatwaves, extreme weather events have become more frequent in recent years as we
+				experience
+				more and more record-breaking temperatures. These are symptoms of change that has been happening
+				in the background for some time now.
+				How does our current world compared to that when we were born? With this context of
+				how our planet has changed throuout the course of our lives, let's think about how our collective
+				decisions can shape a future for the youth and future human beings.
+				Each
+				of the colored stripes represent the annual temperature change relative to pre-industrial levels,
 				meaning the long-term average of 1850-1900. Up until 2023 (in 2023 up to October only) we are seeing
 				historical temperatures, while after 2023 the colors show projected temperatures based on the five
 				Shared Socioeconomic Pathways (SSPs). </p>
-			<img src="./img/stripe.svg" />
+			<img id="legend" src="./img/stripe.svg" />
+
 		</div>
 
+
 		<div class="container">
-			<div class='row text-center'>
-				<div class="col-md-3" id="birthYearSelection">
+
+			<div class='row'>
+				<div class="column" id="birthYearSelection">
 					<p class="instruction"><span class="number">1</span> Select your birth year</p>
 					<div id="birthYearContainer">
 						<div id="imgContainer">
@@ -51,7 +83,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-9" id="celebritySelection">
+				<div class="column" id="celebritySelection">
 					<p class="instruction"><span class="number">2</span> Select a one of the following characters</p>
 					<div id="celebrityContainer">
 						<div class="celebrityWrapper">
@@ -98,52 +130,50 @@
 					<p id="celebrityBirthYear"></p>
 				</div>
 			</div>
-			<div class='row text-center'>
-				<div class="col-md-12">
-					<div id="sspText">
-						<p class="instruction"><span class="number">3</span> Select projected climate scenario</p>
+			<div id="scenarioSelection">
+				<div id="sspText">
+					<p class="instruction"><span class="number">3</span> Select projected climate scenario</p>
 
-						<p>Shared Socioeconomic Pathways (SSPs) are climate change scenarios projecting societal,
-							demographic and economic changes up to 2100. In the SSP labels,
-							the first number refers to the assumed shared socio-economic pathway (1: Sustainability, 2:
-							Middle of the Road, 3: Regional Rivalry, 4: Inequality, 5: Fossil-fueled Development), and
-							the second refers to the approximate global effective radiative forcing (ERF) in 2100. Pick
-							one of these scenarios to see the proejcted annual temperature after 2023,
-							up until 2100, depending on the socioeconomic
-							global changes. </p>
-					</div>
-					<div id="scenariosContainer">
-						<div class="scenario" id="ssp119">
-							<p>ssp1-1.9</p>
-							<img class="icon" src="./img/baby.png" />
-							<p>1.5°C objective </p>
-						</div>
-						<div class="scenario" id="ssp126">
-							<p>ssp1-2.6</p>
-							<img class="icon" src="./img/baby.png" />
-							<p>Sustainability</p>
-						</div>
-						<div class="scenario" id="ssp245">
-							<p>ssp2-4.5</p>
-							<img class="icon" src="./img/baby.png" />
-							<p>Middle of the road</p>
-						</div>
-						<div class="scenario" id="ssp370">
-							<p>ssp3-7.0</p>
-							<img class="icon" src="./img/baby.png" />
-							<p>Regional rivalry</p>
-						</div>
-						<div class="scenario" id="ssp585">
-							<p>ssp5-8.5</p>
-							<img class="icon" src="./img/baby.png" />
-							<p>Fossil fuel-driven </p>
-						</div>
-					</div>
-					<p>Scenario selected:<span id="scenarioSelected"></span></p>
+					<p>Shared Socioeconomic Pathways (SSPs) are climate change scenarios projecting societal,
+						demographic and economic changes up to 2100. In the SSP labels,
+						the first number refers to the assumed shared socio-economic pathway (1: Sustainability, 2:
+						Middle of the Road, 3: Regional Rivalry, 4: Inequality, 5: Fossil-fueled Development), and
+						the second refers to the approximate global effective radiative forcing (ERF) in 2100. Pick
+						one of these scenarios to see the proejcted annual temperature after 2023,
+						up until 2100, depending on the socioeconomic
+						global changes. </p>
 				</div>
+				<div id="scenariosContainer">
+					<div class="scenario" id="ssp119">
+						<p>SSP1-1.9</p>
+						<img class="icon" src="./img/baby.png" />
+						<p>1.5°C objective </p>
+					</div>
+					<div class="scenario" id="ssp126">
+						<p>SSP1-2.6</p>
+						<img class="icon" src="./img/baby.png" />
+						<p>Sustainability</p>
+					</div>
+					<div class="scenario" id="ssp245">
+						<p>SSP2-4.5</p>
+						<img class="icon" src="./img/baby.png" />
+						<p>Middle of the road</p>
+					</div>
+					<div class="scenario" id="ssp370">
+						<p>SSP3-7.0</p>
+						<img class="icon" src="./img/baby.png" />
+						<p>Regional rivalry</p>
+					</div>
+					<div class="scenario" id="ssp585">
+						<p>SSP5-8.5</p>
+						<img class="icon" src="./img/baby.png" />
+						<p>Fossil fuel-driven </p>
+					</div>
+				</div>
+				<!-- <p>Scenario selected:<span id="scenarioSelected"></span></p> -->
 			</div>
 		</div>
-		<p id="start" class="button">start</p>
+		<p id="start" class="button">Show stripes</p>
 	</div>
 
 	<div id="chart"></div>
@@ -164,13 +194,6 @@
 
 	<div id="chart2"></div>
 
-	<!-- The Modal -->
-	<div id="myModal" class="modal">
-		<div class="modal-content">
-			<span id="closeModal">&times;</span>
-			<p id="modalText">Select the three options</p>
-		</div>
-	</div>
 
 
 

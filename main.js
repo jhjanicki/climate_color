@@ -8,6 +8,7 @@ let yourBirthYearTemp;
 let yourDeathYearTemp;
 let selecterPersonBirthYear;
 let selecterPersonDeathYear;
+let selecterPersonBirthYearTemp;
 let selectedPersonData;
 let selectedPerson;
 let currentScenario;
@@ -18,6 +19,7 @@ let currentScenario;
 $("#bithyearInput").on("input", function() {
     yourBirthYear = +this.value;
     $("#birthyear").html(yourBirthYear);
+    $("#birthyearMenu").html(yourBirthYear);
     yourAge = 2023 - yourBirthYear;
     yourDeathYear = yourBirthYear + 99;
     yourData = data.filter(d => d.Year >= yourBirthYear && d.Year <= yourDeathYear)
@@ -32,13 +34,16 @@ $(".celebrityWrapper").on("click", function() {
     selectedPerson = $(this).find(".person").text();
     selecterPersonDeathYear = selecterPersonBirthYear + 99;
     selectedPersonData = data.filter(d => d.Year >= selecterPersonBirthYear && d.Year <= selecterPersonDeathYear)
-    $("#celebrityBirthYear").html(`Compared to ${selectedPerson}, born in ${selecterPersonBirthYear}`);
+
+    // $("#celebrityBirthYear").html(`Compared to ${selectedPerson}, born in ${selecterPersonBirthYear}`);
+    $("#celebrityMenu").html(`${selectedPerson}, born ${selecterPersonBirthYear}`);
     updateCelebrityIcon();
 })
 
 $(".scenario").on("click", function() {
     currentScenario = $(this).attr("id")
-    $("#scenarioSelected").html(currentScenario)
+    // $("#scenarioSelected").html(currentScenario)
+    $("#scenarioMenu").html(convertText(currentScenario))
     yourDeathYearTemp = data.filter(d => d.Year == yourDeathYear)[0][currentScenario].toFixed(2)
 })
 
@@ -57,8 +62,16 @@ $("#start").on("click", function() {
         $("#ssp").html(currentScenario)
         updateRects();
         startTimeline();
+        d3.select(".title2").text(`${selectedPerson}'s climate stripe`)
 
+        if(selecterPersonBirthYear<=2023){
+            selecterPersonBirthYearTemp = data.filter(d => d.Year == selecterPersonBirthYear)[0].historical.toFixed(2)
+        }else{
+            selecterPersonBirthYearTemp = data.filter(d => d.Year == selecterPersonBirthYear)[0][currentScenario].toFixed(2)
+        }
 
+        d3.select(".personBg1").attr("fill", tempColorScale(yourBirthYearTemp))
+        d3.select(".personBg2").attr("class","personBg2").attr("fill", tempColorScale(selecterPersonBirthYearTemp))
     } else {
         $(".modal").css("display", "block")
     }
@@ -71,6 +84,14 @@ $("#closeModal").on("click", function() {
 $("#download").on('click', function() {
     captureScreenshot();
 })
+
+function convertText(text){
+    const ssp = text.slice(0, 3).toUpperCase();
+    const num = text.slice(3, 4);
+    const ERF1 = text.slice(4,5);
+    const ERF2 = text.slice(5);
+    return `${ssp}${num}-${ERF1}.${ERF2}`;
+}
 
 
 //to create the 100 rects before the actual data from the user selection, as placeholder so later on can just update
@@ -141,6 +162,12 @@ bg2.selectAll("rect.bgRect2")
     .attr("y", (d) => yScale(d.Year - 1988) - margin.top)
     .attr("fill", "white")
 
+bg.append("rect").attr("class","personBg1").attr("x", center-(yScale(1) - yScale(0) - 0.8))
+.attr("y", -(yScale(1) - yScale(0) - 0.8)).attr("height", yScale(1) - yScale(0) - 0.8).attr("width", yScale(1) - yScale(0) - 0.8).attr("fill", "white").attr("rx",5).attr("ry",5)
+
+bg2.append("rect").attr("class","personBg2").attr("x", 0)
+.attr("y", -(yScale(1) - yScale(0) - 0.8)).attr("height", yScale(1) - yScale(0) - 0.8).attr("width", yScale(1) - yScale(0) - 0.8).attr("fill", "white").attr("rx",5).attr("ry",5)
+
 svg.selectAll("text.year1")
     .data(numbers)
     .join("text")
@@ -170,14 +197,16 @@ svg.append("image")
     .attr("width", imgDimension * 2)
     .attr("height", imgDimension * 2)
     .attr("x", center - imgDimension * 2)
-    .attr("y", yScale(0));
+    .attr("y", yScale(0))
+    .attr("xlink:href", "./img/baby.png")
 
 svg.append("image")
     .attr("class", "celebrity")
     .attr("width", imgDimension * 2)
     .attr("height", imgDimension * 2)
     .attr("x", center)
-    .attr("y", yScale(0));
+    .attr("y", yScale(0))
+    .attr("xlink:href", "./img/baby.png")
 
 svg.append("text")
     .attr("class", "temperature1")
@@ -201,13 +230,35 @@ svg.append("rect")
     .attr("width", ageRectWidth)
     .attr("height", 30)
     .attr("fill", "rgba(255,255,255,0.5)")
+    .style("opacity",0)
 
 svg.append("text")
     .attr("class", "ageText")
     .attr("x", center)
     .attr("text-anchor", "middle")
     .style("font-size", 16)
-    .style("font-weight", 300);
+    .style("font-weight", 300)
+    .style("opacity",0)
+
+svg.append("text")
+    .attr("class", "title1")
+    .attr("x", center/2)
+    .attr("y", 15)
+    .attr("fill", "black")
+    .style("font-size", 20)
+    .style("font-weight", 300)
+    .attr("text-anchor","middle")
+    .text("Your climate stripe")
+
+svg.append("text")
+    .attr("class", "title2")
+    .attr("x", center + center/2)
+    .attr("y", 15)
+    .attr("fill", "black")
+    .style("font-size", 20)
+    .style("font-weight", 300)
+    .attr("text-anchor","middle")
+    .text("")
 
 
 //SVG2 set up, for your climate color at the end
@@ -328,8 +379,14 @@ function startTimeline() {
                     //update y poositions of icons and text
                     d3.select(".you").attr("y", yScale(Math.round(progress * 100)))
                     d3.select(".celebrity").attr("y", yScale(Math.round(progress * 100)))
-                    d3.select(".ageRect").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)))
-                    d3.select(".ageText").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)) + 20).text(`Age ${+age+1}`)
+                    d3.select(".ageRect").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0))).style("opacity",1)
+                    d3.select(".ageText").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)) + 20).text(`Age ${+age+1}`).style("opacity",1)
+
+
+                    d3.select(".personBg1").attr("y", yScale(Math.round(progress * 100))- (yScale(1) - yScale(0))-22).attr("stroke", "#000").attr("stroke-width", "2px");
+                    d3.select(".personBg2").attr("y", yScale(Math.round(progress * 100))- (yScale(1) - yScale(0))-22).attr("stroke", "#000").attr("stroke-width", "2px");
+
+
 
                     //highlight current rects and unhighlight the rest
                     d3.selectAll(".bgRect1").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
