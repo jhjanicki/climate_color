@@ -34,24 +34,26 @@ $(".celebrityWrapper").on("click", function() {
     selectedPerson = $(this).find(".person").text();
     selecterPersonDeathYear = selecterPersonBirthYear + 99;
     selectedPersonData = data.filter(d => d.Year >= selecterPersonBirthYear && d.Year <= selecterPersonDeathYear)
-
-    // $("#celebrityBirthYear").html(`Compared to ${selectedPerson}, born in ${selecterPersonBirthYear}`);
     $("#celebrityMenu").html(`${selectedPerson}, born ${selecterPersonBirthYear}`);
-    updateCelebrityIcon();
 })
 
 $(".scenario").on("click", function() {
     currentScenario = $(this).attr("id")
     // $("#scenarioSelected").html(currentScenario)
-    $("#scenarioMenu").html(convertText(currentScenario))
-    yourDeathYearTemp = data.filter(d => d.Year == yourDeathYear)[0][currentScenario].toFixed(2)
+    $("#scenarioMenu").html(formatScenarioText(currentScenario))
 })
 
 $("#start").on("click", function() {
     if (yourBirthYear && selecterPersonBirthYear && currentScenario) {
+
+        $(".scroll-arrow").css("display", "block")
+        $("#arrowPerson").html(selectedPerson)
+        $("#arrowScenario").html(formatScenarioText(currentScenario))
+        updateCelebrityIcon();
         svg.style("display", "block")
         svg2.style("display", "block")
-        $("#conclusion").css("display", "block")
+        $(".conclusion").css("display", "block")
+        yourDeathYearTemp = data.filter(d => d.Year == yourDeathYear)[0][currentScenario].toFixed(2)
         if (yourDeathYearTemp === (-1.00)) {
             yourDeathYearTemp = "unsure (data not available after 2100)"
         }
@@ -64,14 +66,14 @@ $("#start").on("click", function() {
         startTimeline();
         d3.select(".title2").text(`${selectedPerson}'s climate stripe`)
 
-        if(selecterPersonBirthYear<=2023){
+        if (selecterPersonBirthYear <= 2023) {
             selecterPersonBirthYearTemp = data.filter(d => d.Year == selecterPersonBirthYear)[0].historical.toFixed(2)
-        }else{
+        } else {
             selecterPersonBirthYearTemp = data.filter(d => d.Year == selecterPersonBirthYear)[0][currentScenario].toFixed(2)
         }
 
         d3.select(".personBg1").attr("fill", tempColorScale(yourBirthYearTemp))
-        d3.select(".personBg2").attr("class","personBg2").attr("fill", tempColorScale(selecterPersonBirthYearTemp))
+        d3.select(".personBg2").attr("class", "personBg2").attr("fill", tempColorScale(selecterPersonBirthYearTemp))
     } else {
         $(".modal").css("display", "block")
     }
@@ -84,14 +86,6 @@ $("#closeModal").on("click", function() {
 $("#download").on('click', function() {
     captureScreenshot();
 })
-
-function convertText(text){
-    const ssp = text.slice(0, 3).toUpperCase();
-    const num = text.slice(3, 4);
-    const ERF1 = text.slice(4,5);
-    const ERF2 = text.slice(5);
-    return `${ssp}${num}-${ERF1}.${ERF2}`;
-}
 
 
 //to create the 100 rects before the actual data from the user selection, as placeholder so later on can just update
@@ -162,16 +156,17 @@ bg2.selectAll("rect.bgRect2")
     .attr("y", (d) => yScale(d.Year - 1988) - margin.top)
     .attr("fill", "white")
 
-bg.append("rect").attr("class","personBg1").attr("x", center-(yScale(1) - yScale(0) - 0.8))
-.attr("y", -(yScale(1) - yScale(0) - 0.8)).attr("height", yScale(1) - yScale(0) - 0.8).attr("width", yScale(1) - yScale(0) - 0.8).attr("fill", "white").attr("rx",5).attr("ry",5)
+bg.append("rect").attr("class", "personBg1").attr("x", center - (yScale(1) - yScale(0) - 0.8))
+    .attr("y", -(yScale(1) - yScale(0) - 0.8)).attr("height", yScale(1) - yScale(0) - 0.8).attr("width", yScale(1) - yScale(0) - 0.8).attr("fill", "white").attr("rx", 5).attr("ry", 5)
 
-bg2.append("rect").attr("class","personBg2").attr("x", 0)
-.attr("y", -(yScale(1) - yScale(0) - 0.8)).attr("height", yScale(1) - yScale(0) - 0.8).attr("width", yScale(1) - yScale(0) - 0.8).attr("fill", "white").attr("rx",5).attr("ry",5)
+bg2.append("rect").attr("class", "personBg2").attr("x", 0)
+    .attr("y", -(yScale(1) - yScale(0) - 0.8)).attr("height", yScale(1) - yScale(0) - 0.8).attr("width", yScale(1) - yScale(0) - 0.8).attr("fill", "white").attr("rx", 5).attr("ry", 5)
 
 svg.selectAll("text.year1")
     .data(numbers)
     .join("text")
     .attr("class", "year1")
+    .attr("id", (d, i) => `year1_${i}`)
     .attr("x", yearTextOffsetX)
     .attr("y", (d, i) => margin.top + i * (yScale(1) - yScale(0)) - yearTextOffsetY)
     .attr("fill", "black")
@@ -184,6 +179,7 @@ svg.selectAll("text.year2")
     .data(numbers)
     .join("text")
     .attr("class", "year2")
+    .attr("id", (d, i) => `year2_${i}`)
     .attr("x", width - yearTextOffsetX)
     .attr("y", (d, i) => margin.top + i * (yScale(1) - yScale(0)) - yearTextOffsetY)
     .attr("fill", "black")
@@ -230,7 +226,7 @@ svg.append("rect")
     .attr("width", ageRectWidth)
     .attr("height", 30)
     .attr("fill", "rgba(255,255,255,0.5)")
-    .style("opacity",0)
+    .style("opacity", 0)
 
 svg.append("text")
     .attr("class", "ageText")
@@ -238,26 +234,34 @@ svg.append("text")
     .attr("text-anchor", "middle")
     .style("font-size", 16)
     .style("font-weight", 300)
-    .style("opacity",0)
+    .style("opacity", 0)
+
+svg.append("text")
+    .attr("class", "ageText2023")
+    .attr("x", center)
+    .attr("text-anchor", "middle")
+    .style("font-size", 16)
+    .style("font-weight", 700)
+    .style("opacity", 0)
 
 svg.append("text")
     .attr("class", "title1")
-    .attr("x", center/2)
+    .attr("x", center / 2)
     .attr("y", 15)
     .attr("fill", "black")
     .style("font-size", 20)
     .style("font-weight", 300)
-    .attr("text-anchor","middle")
+    .attr("text-anchor", "middle")
     .text("Your climate stripe")
 
 svg.append("text")
     .attr("class", "title2")
-    .attr("x", center + center/2)
+    .attr("x", center + center / 2)
     .attr("y", 15)
     .attr("fill", "black")
     .style("font-size", 20)
     .style("font-weight", 300)
-    .attr("text-anchor","middle")
+    .attr("text-anchor", "middle")
     .text("")
 
 
@@ -347,7 +351,6 @@ function updateRects() {
     d3.select(".temperature1").data(yourData).text(d => d[currentScenario].toFixed(2) === "-1.00" ? "No data" : `${d[currentScenario].toFixed(2)>0?"+":""}${d[currentScenario].toFixed(2)}°C`)
     d3.select(".temperature2").data(selectedPersonData).text(d => d[currentScenario].toFixed(2) === "-1.00" ? "No data" : `${d[currentScenario].toFixed(2)>0?"+":""}${d[currentScenario].toFixed(2)}°C`)
 
-
     d3.selectAll(".bgRect3")
         .data(yourData)
         .attr("fill", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]))
@@ -356,68 +359,30 @@ function updateRects() {
     d3.select("#yourDeathYear").text(yourDeathYear)
 }
 
-let age = 0;
-
-function startTimeline() {
-    gsap.timeline({
-        scrollTrigger: {
-            trigger: "#svg",
-            scrub: true,
-            markers: false,
-            start: "top top", //first trigger, second scroller
-            end: "100% bottom",
-            onUpdate({
-                progress,
-            }) {
-                age = Math.round((progress * 100))
-                updateIcon(".you", age) //update 'you' icon based on age
-
-                if (age < 100) {
-                    let temp1 = (yourData[age][currentScenario]).toFixed(2);
-                    let temp2 = (selectedPersonData[age][currentScenario]).toFixed(2);
-
-                    //update y poositions of icons and text
-                    d3.select(".you").attr("y", yScale(Math.round(progress * 100)))
-                    d3.select(".celebrity").attr("y", yScale(Math.round(progress * 100)))
-                    d3.select(".ageRect").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0))).style("opacity",1)
-                    d3.select(".ageText").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)) + 20).text(`Age ${+age+1}`).style("opacity",1)
 
 
-                    d3.select(".personBg1").attr("y", yScale(Math.round(progress * 100))- (yScale(1) - yScale(0))-22).attr("stroke", "#000").attr("stroke-width", "2px");
-                    d3.select(".personBg2").attr("y", yScale(Math.round(progress * 100))- (yScale(1) - yScale(0))-22).attr("stroke", "#000").attr("stroke-width", "2px");
-
-
-
-                    //highlight current rects and unhighlight the rest
-                    d3.selectAll(".bgRect1").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
-                    d3.select(`#bgRect1_${age+1}`).attr("stroke", "#000").attr("stroke-width", "2px");
-
-                    d3.selectAll(".bgRect2").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
-                    d3.select(`#bgRect2_${age+1}`).attr("stroke", "#000").attr("stroke-width", "2px");
-
-                    d3.select(".temperature1").attr("y", yScale(Math.round(progress * 100)) + 46).text(temp1 === "-1.00" ? "No data" : `${temp1>0?"+":""}${temp1}°C`).attr("x", temp1 == "-1.00" ? (center - 150) : (center - 140)) //I used -1 to indicate no data
-                    d3.select(".temperature2").attr("y", yScale(Math.round(progress * 100)) + 46).text(temp2 === "-1.00" ? "No data" : `${temp2>0?"+":""}${temp2}°C`)
-                }
-            }
-        }
-    })
-}
-
-
-
-  function captureScreenshot() {
+function captureScreenshot() {
     const divToCapture = document.getElementById('chart2');
 
-    html2canvas(divToCapture).then(function (canvas) {
-      const dataURL = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.href = dataURL;
-      link.download = 'screenshot.png';
-      link.click();
+    html2canvas(divToCapture).then(function(canvas) {
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'screenshot.png';
+        link.click();
     });
 
-  }
+}
 
+function formatScenarioText(scenario) {
+    const ssp = scenario.slice(0, 3).toUpperCase();
+    const num = scenario.slice(3, 4);
+    const ERF1 = scenario.slice(4, 5);
+    const ERF2 = scenario.slice(5);
+    return `${ssp}${num}-${ERF1}.${ERF2}`;
+}
+
+const scenarioMap = d3.scaleOrdinal().domain(["ssp119","ssp126","ssp245","ssp370","ssp585"]).range(["1.5°C Objective","Sustainability","Middle of the Road", "Regional Rivalry","Fossil Fuel-Driven"])
 
 //Functions to update icons...
 
@@ -469,4 +434,107 @@ function updateIcon(classOrID, age) {
         $(classOrID).attr("src", "./img/old.png");
     }
 
+}
+
+const wrap = (text, width) => {
+    text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0, //<-- 0!
+            lineHeight = 1.1, // ems
+            x = text.attr("x"), //<-- include the x!
+            y = text.attr("y"),
+            dy = text.attr("dy") ? text.attr("dy") : 0; //<-- null check
+        tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    });
+}
+
+
+
+let menuHt = document.querySelector("#menu").offsetHeight;
+
+ScrollTrigger.create({
+    trigger: "#selectionWrapper",
+    start: "top top",
+    end: `bottom ${menuHt-270}px`,
+    pin: "#menu",
+    markers: false
+});
+
+
+
+let age = 0;
+
+function startTimeline() {
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: "#svg",
+            scrub: true,
+            markers: false,
+            start: "top top", //first trigger, second scroller
+            end: "100% 80%",
+            onUpdate({
+                progress,
+            }) {
+                age = Math.round((progress * 100))
+                updateIcon(".you", age) //update 'you' icon based on age
+
+                if (age < 100) {
+                    let temp1 = (yourData[age][currentScenario]).toFixed(2);
+                    let temp2 = (selectedPersonData[age][currentScenario]).toFixed(2);
+
+                    //update y poositions of icons and text
+                    d3.select(".you").attr("y", yScale(Math.round(progress * 100)))
+                    d3.select(".celebrity").attr("y", yScale(Math.round(progress * 100)))
+                    d3.select(".ageRect").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0))).style("opacity", 1)
+
+
+                    d3.select(".personBg1").attr("y", yScale(Math.round(progress * 100)) - (yScale(1) - yScale(0)) - 22).attr("stroke", "#000").attr("stroke-width", "2px");
+                    d3.select(".personBg2").attr("y", yScale(Math.round(progress * 100)) - (yScale(1) - yScale(0)) - 22).attr("stroke", "#000").attr("stroke-width", "2px");
+
+                    //highlight current rects and unhighlight the rest
+                    d3.selectAll(".bgRect1").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
+                    d3.select(`#bgRect1_${age+1}`).attr("stroke", "#000").attr("stroke-width", "2px");
+                    d3.selectAll(".year1").style("font-weight", 400)
+                    d3.select(`#year1_${age}`).style("font-weight", 700)
+                    d3.select(".ageText").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)) + 20).style("opacity", 1).text(`Age ${+age+1}`)
+
+
+                    d3.selectAll(".bgRect2").attr("stroke", d => d.historic === "NA" ? "#bdbdbd" : tempColorScale(d[currentScenario]));
+                    d3.select(`#bgRect2_${age+1}`).attr("stroke", "#000").attr("stroke-width", "2px");
+                    d3.selectAll(".year2").style("font-weight", 400)
+                    d3.select(`#year2_${age}`).style("font-weight", 700)
+
+                    d3.select(".temperature1").attr("y", yScale(Math.round(progress * 100)) + 46).text(temp1 === "-1.00" ? "No data" : `${temp1>0?"+":""}${temp1}°C`).attr("x", temp1 == "-1.00" ? (center - 150) : (center - 140)) //I used -1 to indicate no data
+                    d3.select(".temperature2").attr("y", yScale(Math.round(progress * 100)) + 46).text(temp2 === "-1.00" ? "No data" : `${temp2>0?"+":""}${temp2}°C`)
+
+
+                    if ((yourBirthYear + age) === 2023) {
+                        d3.select(".ageText2023").attr("y", yScale(Math.round(progress * 100)) + (yScale(1) - yScale(0)) + 50).style("opacity", 1).text(`2023 has been confirmed to be the warmest on record, with  global temperatures rising around 1.4°C above pre-industrial levels according to WMO. After 2023, yearly temperature anomalies are projected under the
+                        ${scenarioMap(currentScenario)} scenario.`).call(wrap, 300)
+                        d3.selectAll(".bgRect1").style("opacity",0.2).style("stroke-opacity",0.2)
+                        d3.selectAll(".bgRect2").style("opacity",0.2).style("stroke-opacity",0.2)
+                        d3.select(`#bgRect1_${age+1}`).style("opacity",1).style("stroke-opacity",1)
+                        d3.select(`#bgRect2_${age+1}`).style("opacity",1).style("stroke-opacity",1)
+
+                    } else {
+                        d3.selectAll("rect").style("opacity",1).style("stroke-opacity",1)
+                        d3.select(".ageText2023").style("opacity", 0)
+                    }
+                }
+            }
+        }
+    })
 }

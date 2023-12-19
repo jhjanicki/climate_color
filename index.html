@@ -9,8 +9,6 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap"
 		rel="stylesheet">
-	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
 	<link href="./style.css" rel="stylesheet">
 </head>
 
@@ -24,44 +22,48 @@
 		</div>
 	</div>
 
-	<div id="menu">
-		<div id="menuTitleWrapper">
-			<p id="menuTitle" class="menuTitleItem">Selection summary</p>
-			<img id="menuCaret" class="menuTitleItem" src="img/caret.png" />
-		</div>
-		<div id="menuInner">
-			<p><span class="numberSmall">1</span><b>Your birth year:</b> <span id="birthyearMenu"></span></p>
-			<hr>
-			<p><span class="numberSmall">2</span><b>Famous person:</b><br> <span id="celebrityMenu"></span></p>
-			<hr>
-			<p><span class="numberSmall">3</span><b>Scenario:</b> <span id="scenarioMenu"></span></p>
+
+
+	<div class="header">
+		<div class="headerText">
+			<h1>A lifetime of change</h1>
+			<h3>Leaving the future generation hope for a better planet</h3>
+			<p>By Julia Janicki, Daisy Chung. Additional work by Jacki Whisenant </p>
 		</div>
 	</div>
-
-
 	<div id="selectionWrapper">
-		<div class="header">
-			<div class="headerText">
-				<h1>A lifetime of change</h1>
-				<h3>Leaving the future generation hope for a better planet</h3>
-				<p>By Julia Janicki, Daisy Chung. Additional work by Jacki Whisenant </p>
-			</div>
-		</div>
-		<div class="textBlock">
-			<p> Globally, wildfires, heatwaves, extreme weather events have become more frequent in recent years as we
-				experience
-				more and more record-breaking temperatures. These are symptoms of change that has been happening
+		<div class="intro">
+			<p class="textBlock"> Just over the last few years, wildfires, heatwaves, extreme weather events have become
+				visibly more
+				frequent, with ever increasing record-breaking temperatures. These are symptoms of change that has been
+				happening
 				in the background for some time now.
-				How does our current world compared to that when we were born? With this context of
-				how our planet has changed throuout the course of our lives, let's think about how our collective
-				decisions can shape a future for the youth and future human beings.
+				How does our current world compared to that when we were born? How has our planet changed throuout the
+				course of our lives, short on the scale of a planet but long given the pace of global warming? Finally
+				let's
+				think about how our collective
+				decisions can shape a future for the youth and humans who are not yet born.
+				<br><br>
 				Each
-				of the colored stripes represent the annual temperature change relative to pre-industrial levels,
-				meaning the long-term average of 1850-1900. Up until 2023 (in 2023 up to October only) we are seeing
-				historical temperatures, while after 2023 the colors show projected temperatures based on the five
-				Shared Socioeconomic Pathways (SSPs). </p>
+				of the stripes below represent the annual temperature change relative to pre-industrial levels,
+				meaning the long-term average of 1850-1900. Until 2023 (up to October only) we are seeing
+				historical temperature anomalies calculated by the WMO, while after 2023 the colors show projected
+				temperatures based on the five
+				Shared Socioeconomic Pathways according to IPCC.
+			</p>
 			<img id="legend" src="./img/stripe.svg" />
-
+		</div>
+		<div id="menu">
+			<div id="menuTitleWrapper">
+				<p id="menuTitle" class="menuTitleItem">Selection summary</p>
+			</div>
+			<div id="menuInner">
+				<p><span class="numberSmall">1</span><b>Your birth year:</b> <span id="birthyearMenu"></span></p>
+				<hr>
+				<p><span class="numberSmall">2</span><b>Famous person:</b><br> <span id="celebrityMenu"></span></p>
+				<hr>
+				<p><span class="numberSmall">3</span><b>Scenario:</b> <span id="scenarioMenu"></span></p>
+			</div>
 		</div>
 
 
@@ -74,12 +76,12 @@
 						<div id="imgContainer">
 							<img id="you" class="icon" src="./img/baby.png" />
 						</div>
-						<div>
+						<div id="sliderWrapper">
 							<input type="range" id="bithyearInput" name="bithyearInput" step="1" min="1923" max="2023">
 						</div>
 						<p id="birthYearText">Your birth year:<span id="birthyear"></span></p>
-						<p id="birthYearInstruction">Color of tiles represent the temperature anomaly of your birth
-							year. Age ranging from 1923 to 2023.</p>
+						<p id="birthYearInstruction">Background color represents the temperature anomaly of your birth
+							year. Year from 1923 to 2023.</p>
 					</div>
 				</div>
 
@@ -135,13 +137,12 @@
 					<p class="instruction"><span class="number">3</span> Select projected climate scenario</p>
 
 					<p>Shared Socioeconomic Pathways (SSPs) are climate change scenarios projecting societal,
-						demographic and economic changes up to 2100. In the SSP labels,
+						demographic and economic changes up to 2100. According to IPCC, in the SSP labels,
 						the first number refers to the assumed shared socio-economic pathway (1: Sustainability, 2:
 						Middle of the Road, 3: Regional Rivalry, 4: Inequality, 5: Fossil-fueled Development), and
 						the second refers to the approximate global effective radiative forcing (ERF) in 2100. Pick
-						one of these scenarios to see the proejcted annual temperature after 2023,
-						up until 2100, depending on the socioeconomic
-						global changes. </p>
+						one of these scenarios to see the proejcted annual temperature anomalies after 2023
+						up until 2100. </p>
 				</div>
 				<div id="scenariosContainer">
 					<div class="scenario" id="ssp119">
@@ -170,30 +171,53 @@
 						<p>Fossil fuel-driven </p>
 					</div>
 				</div>
-				<!-- <p>Scenario selected:<span id="scenarioSelected"></span></p> -->
 			</div>
 		</div>
 		<p id="start" class="button">Show stripes</p>
+		<div class='scroll-arrow'>↓<br>
+			<span class='arrow-text'>Compare your temperatures with <span id="arrowPerson"></span> under the <span
+					id="arrowScenario"></span> scenario</span>
+		</div>
 	</div>
 
 	<div id="chart"></div>
 
-	<div class="textBlock" id="conclusion">
-		<p> Each of the colored stripes represent the annual temperature change relative to pre-industrial levels,
-			meaning the long-term average of 1850-1900. Up until 2023 (in 2023 up to October only) we are seeing
-			historical temperatures, while after 2023 the colors show projected temperatures based on the five
-			Shared Socioeconomic Pathways (SSPs). </p>
-		<br><br>
+	<div class="conclusion">
+
 		<p> Download your climate colors, which ranges from <span id="tempLow"></span> in <span id="yearLow"></span> to
 			<span id="tempHigh"></span> in <span id="yearHigh"></span>, under the <span id="ssp"></span>
 			scenario after year 2023.
 		</p>
 		<button id="download" class="button">Download</button>
+
+
 	</div>
 
 
 	<div id="chart2"></div>
 
+	<div class="conclusion">
+
+		<p>
+			<b>Data:</b><br>
+			Annual temperature anomaly relative to pre-industrial levels (1850-1900), until 2023 (up to October only)
+			the data is from World Meteorological Organization, which is the mean of five datasets: HadCRUT5, NOAA,
+			GlobalTemp, GISTEMP, ERA5 1, and JRA55. The data of the projected temperature anomalies based on the five
+			SSP
+			scenarios after 2023 are from the IPCC Sixth Assessment report. Ideally the historical and projected data
+			would be from the same sources, but IPCC historical data is not as updated as the WMO data.
+			The original climate stripes idea was developed by Ed Hawkins, this is one of the many adaptations.
+		</p>
+		<br><br>
+		<p>
+			<b>Credit:</b><br>
+			Data / Development / Narrative: Julia Janicki
+			<br>
+			Design / icons: Daisy Chung
+			<br>
+			Additional icon help: Jacki Whisenant
+		</p>
+	</div>
 
 
 
