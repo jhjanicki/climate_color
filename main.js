@@ -37,7 +37,7 @@ $(".celebrityWrapper").on("click", function() {
     $("#celebrityMenu").html(`${selectedPerson}, born ${selecterPersonBirthYear}`);
 })
 
-$(".scenario").on("click", function() {
+$(".scenarioWrapper").on("click", function() {
     currentScenario = $(this).attr("id")
     // $("#scenarioSelected").html(currentScenario)
     $("#scenarioMenu").html(formatScenarioText(currentScenario))
@@ -95,7 +95,7 @@ let dummyData = data.filter(d => d.Year >= 1988 && d.Year <= 2087)
 const margin = {
     top: 100,
     right: 0,
-    bottom: 0,
+    bottom: 70,
     left: 0
 };
 const width = d3.select("#chart").node().getBoundingClientRect().width;

@@ -56,6 +56,18 @@ p {
 	margin-top: 30px;
 }
 
+@media (max-width: 700px) {
+
+    .headerText h1{
+        font-size: 60px;
+        line-height: 70px;
+    }
+
+    .headerText h3{
+        font-size: 18px;
+    }
+}
+
 .intro {
 	position: relative;
 }
@@ -75,6 +87,10 @@ p {
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
+}
+
+#selectionWrapper {
+	position: relative;
 }
 
 .container {
@@ -267,7 +283,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .celebrityWrapper:hover,
-.scenario:hover {
+.scenarioWrapper:hover {
 	cursor: pointer;
 	box-shadow: 1px 1px 5px -1px rgba(0, 0, 0, 0.4);
 	transition: all 0.25s ease;
@@ -286,37 +302,43 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 
-.scenario {
+.scenarioWrapper {
 	text-align: center;
 	display: inline-block;
 	height: 180px;
 	width: 180px;
 	border-radius: 10px;
+    margin: 4px 2px;
 }
 
-.scenario:nth-child(1) {
+.scenarioWrapper:nth-child(1) {
 	background-color: #fff5f0;
 }
 
-.scenario:nth-child(2) {
+.scenarioWrapper:nth-child(2) {
 	background-color: #fee0d2;
 }
 
-.scenario:nth-child(3) {
+.scenarioWrapper:nth-child(3) {
 	background-color: #fc9272;
 }
 
-.scenario:nth-child(4) {
+.scenarioWrapper:nth-child(4) {
 	background-color: #cb181d;
 }
 
-.scenario:nth-child(5) {
+.scenarioWrapper:nth-child(5) {
 	background-color: #67000d;
 	color: white;
 }
 
-.scenario {
-	margin: 4px 2px;
+@media (max-width: 700px) {
+
+	#celebrityContainer, #scenarioSelection, .celebrityWrapper, .scenarioWrapper,.instruction {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 #start {
@@ -428,10 +450,6 @@ input[type="range"]::-webkit-slider-thumb {
 	transition: all 0.5s ease;
 }
 
-#selectionWrapper {
-	position: relative;
-}
-
 #menu {
 	opacity: 0.85;
 	width: 260px;
@@ -477,7 +495,7 @@ input[type="range"]::-webkit-slider-thumb {
 .menuTitleItem {
 	display: inline-block;
 	vertical-align: middle;
-	color: #68301b;
+	color: #67000d;
 }
 
 @media (max-width: 700px) {

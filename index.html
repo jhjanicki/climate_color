@@ -21,9 +21,6 @@
 			<p id="modalText">Select the three options</p>
 		</div>
 	</div>
-
-
-
 	<div class="header">
 		<div class="headerText">
 			<h1>A lifetime of change</h1>
@@ -68,7 +65,6 @@
 
 
 		<div class="container">
-
 			<div class='row'>
 				<div class="column" id="birthYearSelection">
 					<p class="instruction"><span class="number">1</span> Select your birth year</p>
@@ -77,14 +73,13 @@
 							<img id="you" class="icon" src="./img/baby.png" />
 						</div>
 						<div id="sliderWrapper">
-							<input type="range" id="bithyearInput" name="bithyearInput" step="1" min="1923" max="2023">
+							<input type="range" id="bithyearInput" name="bithyearInput" step="1" min="1924" max="2023">
 						</div>
-						<p id="birthYearText">Your birth year:<span id="birthyear"></span></p>
+						<p id="birthYearText">Your birth year: <span id="birthyear"></span></p>
 						<p id="birthYearInstruction">Background color represents the temperature anomaly of your birth
-							year. Year from 1923 to 2023.</p>
+							year. Year from 1924 to 2023.</p>
 					</div>
 				</div>
-
 				<div class="column" id="celebritySelection">
 					<p class="instruction"><span class="number">2</span> Select a one of the following characters</p>
 					<div id="celebrityContainer">
@@ -145,27 +140,27 @@
 						up until 2100. </p>
 				</div>
 				<div id="scenariosContainer">
-					<div class="scenario" id="ssp119">
+					<div class="scenarioWrapper" id="ssp119">
 						<p>SSP1-1.9</p>
 						<img class="icon" src="./img/baby.png" />
 						<p>1.5°C objective </p>
 					</div>
-					<div class="scenario" id="ssp126">
+					<div class="scenarioWrapper" id="ssp126">
 						<p>SSP1-2.6</p>
 						<img class="icon" src="./img/baby.png" />
 						<p>Sustainability</p>
 					</div>
-					<div class="scenario" id="ssp245">
+					<div class="scenarioWrapper" id="ssp245">
 						<p>SSP2-4.5</p>
 						<img class="icon" src="./img/baby.png" />
 						<p>Middle of the road</p>
 					</div>
-					<div class="scenario" id="ssp370">
+					<div class="scenarioWrapper" id="ssp370">
 						<p>SSP3-7.0</p>
 						<img class="icon" src="./img/baby.png" />
 						<p>Regional rivalry</p>
 					</div>
-					<div class="scenario" id="ssp585">
+					<div class="scenarioWrapper" id="ssp585">
 						<p>SSP5-8.5</p>
 						<img class="icon" src="./img/baby.png" />
 						<p>Fossil fuel-driven </p>
@@ -183,21 +178,17 @@
 	<div id="chart"></div>
 
 	<div class="conclusion">
-
 		<p> Download your climate colors, which ranges from <span id="tempLow"></span> in <span id="yearLow"></span> to
 			<span id="tempHigh"></span> in <span id="yearHigh"></span>, under the <span id="ssp"></span>
 			scenario after year 2023.
 		</p>
 		<button id="download" class="button">Download</button>
-
-
 	</div>
 
 
 	<div id="chart2"></div>
 
 	<div class="conclusion">
-
 		<p>
 			<b>Data:</b><br>
 			Annual temperature anomaly relative to pre-industrial levels (1850-1900), until 2023 (up to October only)
